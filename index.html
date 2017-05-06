@@ -10,18 +10,59 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+	<link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="assets/javascript/hasPolyfill.js"></script>
 </head>
 <body>
-	<h1>Rock-Paper-Scissors! Press R, P, S to play</h1>
+	<div class="container center">
+		<div class="row">
+			<div class="col-lg-12 spacing">
+				<h1>Rock-Paper-Scissors!</h1>
+			</div>
+		</div>
 
-	<h2 id="compPlayerChoice"></h2>
-	<h3 id="wins"></h3>
-	<h3 id="losses"></h3>
-	<h3 id="ties"></h3>
+		<div class="row">
+			<p class="col-lg-6 spacing" id="wins">Wins</p>
+			<p class="col-lg-6 spacing" id="losses">Losses</p>
+		</div>
 
-	<script src="logic.js"></script>
+
+		<div class="row">
+			<div class="col-lg-8 spacing">
+				<img src="assets/images/gameBack.png">
+			</div>
+
+			<div class="col-lg-4 spacing">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="refTalk">
+							<p>BlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlahBlah</p>
+						</div>
+
+						<img src="assets/images/ref.png">
+					</div>
+				</div>
+	
+			</div>
+		</div>
+
+
+		<div class="row">
+
+			<div class="col-lg-4 spacing">
+				<button onclick="buttonR()">Rock</button>
+			</div>	
+			<div class="col-lg-4 spacing">
+				<button onclick="buttonP()">Paper</button>
+			</div>	
+			<div class="col-lg-4 spacing">
+				<button onclick="buttonS()">Scissors</button>
+			</div>	
+
+		</div>
+	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Latest compiled and minified JavaScript -->

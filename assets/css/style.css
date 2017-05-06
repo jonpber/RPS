@@ -1,0 +1,27 @@
+body {
+	background-image: url("../images/swirl_pattern1.png");
+}
+
+.spacing {
+	background-color: white;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.center {
+	margin-top: 50px;
+}
+
+h1, p {
+	font-family: 'Archivo Black', sans-serif;
+}
+
+h1 {
+	margin: 10px;
+}
+
+.refTalk {
+	position: absolute;
+	text-align: left;
+	margin-left: 30px;
+}
