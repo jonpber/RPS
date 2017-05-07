@@ -26,6 +26,11 @@ var rps = {
 	compHandPick: "",
 	compHandA: "",
 	compHandB: "",
+
+	pHAImg: document.getElementById("p2HandA"),
+	pHBImg: document.getElementById("p2HandB"),
+	cHAImg: document.getElementById("c2HandA"),
+	cHBImg: document.getElementById("c2HandB"),
 	pWon: false,
 	tie: false,
 
@@ -65,6 +70,11 @@ var rps = {
 	split: function(){
 		this.splitRow.style.display = "none";
 		this.twoHandRow.style.display = "block";
+		this.pImg.style.display = "none";
+		this.compImg.style.display = "none";
+		this.pHAImg.style.display = "block";
+		this.pHBImg.style.display = "block";
+
 	},
 
 	handsCheck(x, y){
@@ -74,9 +84,14 @@ var rps = {
 				this.tie = false;
 			}
 
-			else {
+			else if (y === "p"){
 				this.pWon = false;
 				this.tie = false;
+			}
+
+			else {
+				this.pWon = false;
+				this.tie = true;
 			}
 		}
 
@@ -86,9 +101,14 @@ var rps = {
 				this.tie = false;
 			}
 
-			else {
+			else if (y === "r"){
 				this.pWon = false;
 				this.tie = false;
+			}
+
+			else {
+				this.pWon = false;
+				this.tie = true;
 			}
 		}
 
@@ -98,29 +118,30 @@ var rps = {
 				this.tie = false;
 			}
 
-			else {
+			else if (y === "s"){
 				this.pWon = false;
 				this.tie = false;
 			}
+
+			else {
+				this.pWon = false;
+				this.tie = true;
+			}
 		}
 
-		console.log(this.betNum);
-
-		if(!this.pWon && x != y){
+		if(!this.pWon && !this.tie){
 			this.betNum = 0;
+			this.updateScore();
 		}
 
-		console.log(this.betNum);
-
-		if (x === y){
-			this.tie = true;
-			this.pWon = false;
+		else if (this.tie){
+			this.tieScenario();
+			this.updateScore();
 		}
 
-		console.log(this.betNum);
-
-		this.updateScore();
-
+		else {
+			this.updateScore();
+		}
 	},
 
 	buttonR: function () {
@@ -147,6 +168,31 @@ var rps = {
 		this.handsCheck(this.pHand, this.compHandPick);
 		
 	},
+
+	buttonAR: function(){
+		this.pHAImg.src = "assets/images/p2HandAr.png";
+	},
+
+	buttonAP: function(){
+		this.pHAImg.src = "assets/images/p2HandAp.png";
+	},
+
+	buttonAS: function(){
+		this.pHAImg.src = "assets/images/p2HandAs.png";
+	},
+
+	buttonBR: function(){
+		this.pHBImg.src = "assets/images/p2HandBr.png";
+	},
+
+	buttonBP: function(){
+		this.pHBImg.src = "assets/images/p2HandBp.png";
+	},
+
+	buttonBS: function(){
+		this.pHBImg.src = "assets/images/p2HandBs.png";
+	},
+
 
 	reset: function(){
 		this.chips += this.betNum;
@@ -225,23 +271,26 @@ var rps = {
 	updateScore: function (){
 		if (this.pWon && !this.tie) {
 			this.stateText.textContent = "Computer's " + this.compHandPick + this.hyperbole[Math.floor(Math.random() * 3)] + "Player's " + this.pHand;
-			
+			this.reset();
+			this.pImg.style.display = "inline";
+			this.compImg.style.display = "inline";
+
 		}
 
 		else if (!this.pWon && !this.tie){
 			this.stateText.textContent = "Players's " + this.pHand + this.hyperbole[Math.floor(Math.random() * 3)] + "Computer's " + this.compHandPick;
+			this.reset();
+			this.pImg.style.display = "inline";
+			this.compImg.style.display = "inline";
+
 		}
 
 		else if (this.tie) {
 			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
+			this.pImg.style.display = "inline";
+			this.compImg.style.display = "inline";
 			this.tieScenario();
 		}
-
-		this.pImg.style.display = "inline";
-		this.compImg.style.display = "inline";
-		this.reset();
-
-
 
 	}
 
