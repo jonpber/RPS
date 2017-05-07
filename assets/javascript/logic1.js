@@ -69,6 +69,7 @@ var rps = {
 		this.twoHandRow.style.display = "block";
 		this.pImg.style.display = "none";
 		this.compImg.style.display = "none";
+		this.splitBattle = true;
 
 	},
 
@@ -80,10 +81,10 @@ var rps = {
 
 		else {
 			this.compHandA = this.compHand[Math.floor(Math.random() * 3)];
-			this.cHAImg.src = "assets/images/cHandA" + this.compHandPick + ".png";
+			this.cHAImg.src = "assets/images/c2HandA" + this.compHandA + ".png";
 
 			this.compHandB = this.compHand[Math.floor(Math.random() * 3)];
-			this.cHAImg.src = "assets/images/cHandB" + this.compHandPick + ".png";
+			this.cHAImg.src = "assets/images/c2HandB" + this.compHandB + ".png";
 		}
 
 
@@ -152,22 +153,55 @@ var rps = {
 	},
 
 	gamelogic: function(){
-		if(!this.split){
+		if(!this.splitBattle){
 			var winner = this.handsCheck(this.pHand, this.compHand);
 			this.roundEnd(winner);
 		}
+
+		else {
+
+			var winner1 = this.handsCheck(this.pHandA, this.compHandA);
+			var winner2 = this.handsCheck(this.pHandB, this.compHandB);
+
+			if (winner1 != winner2){
+				this.roundEnd("t");
+			}
+
+			else if (winner1 === "p" && winner2 === "p"){
+				this.roundEnd("p");
+			}
+
+			else {
+				this.roundEnd("c");
+			}
+		} 
 	},
 
 	roundStart: function(){
-		this.bet();
-		this.compPick();
-		this.roundEnd(this.handsCheck(this.pHand, this.compHandPick));
+		console.log("Is this a splitBattle: " + this.splitBattle);
+		if(!this.splitBattle){
+			this.bet();
+			this.compPick();
+			this.gamelogic();
+		}
+
+		else {
+			this.compPick();
+			this.gamelogic();
+		}
 
 	},
 
 	roundEnd: function (x){
-		this.pImg.style.display = "inline";
-		this.compImg.style.display = "inline";
+		if (!this.splitBattle){
+			this.pImg.style.display = "inline";
+			this.compImg.style.display = "inline";
+		}
+
+		else {
+			this.cHAImg.style.display = "inline";
+			this.cHBImg.style.display = "inline";
+		}
 
 		//player wins round
 		if (x === "p") {
@@ -178,6 +212,9 @@ var rps = {
 			this.pot = 0;
 			this.betNum = 0;
 			this.potTo0(this.potText);
+			this.betRow.style.display = "block";
+			this.twoHandRow.style.display = "none";
+			this.onlyHandRow.style.display = "block";
 
 		}
 
@@ -190,6 +227,9 @@ var rps = {
 			this.betNum = 0;
 			this.getPot();
 			this.potTo0(this.potText);
+			this.betRow.style.display = "block";
+			this.twoHandRow.style.display = "none";
+			this.onlyHandRow.style.display = "block";
 		}
 
 		//round ends in tie
@@ -216,26 +256,23 @@ var rps = {
 	},
 
 	buttonP: function () {
-		this.bet();
-		this.compPick();
 		this.pImg.src = "assets/images/pHandp.png";
 		this.pHand = "p";
-		this.handsCheck(this.pHand, this.compHandPick);
+		this.roundStart();
 	},
 
 	buttonS: function () {
-		this.bet();
-		this.compPick();
 		this.pHand = "s";
 		this.pImg.src = "assets/images/pHands.png";
-		this.handsCheck(this.pHand, this.compHandPick);	
+		this.roundStart();
 	},
 
 	buttonAR: function(){
 		this.pHAImg.src = "assets/images/p2HandAr.png";
-		this.pHAImg.style.display = "block";
-		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "r";
+		this.pHAImg.style.display = "inline";
+		this.buttonDisabled(this.pHandABut, 3, true);
+
 	},
 
 	buttonAP: function(){
@@ -257,6 +294,8 @@ var rps = {
 		this.pHBImg.style.display = "block";
 		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "r";
+		this.roundStart();
+
 	},
 
 	buttonBP: function(){
