@@ -61,6 +61,7 @@ var rps = {
 		this.tie = false;
 		this.pot /= 2;
 		this.getPot();
+		this.potTo0(this.potText);
 	},
 
 	split: function(){
@@ -311,6 +312,13 @@ var rps = {
 		}
 	},
 
+	potTo0: function(x){
+		setTimeout(function () {
+	        this.pot = 0;
+	        x.textContent = this.pot;
+	    	}, 1500);
+	},
+
 
 	compPick: function () {
 		this.compHandPick = this.compHand[Math.floor(Math.random() * 3)];
@@ -334,6 +342,7 @@ var rps = {
 			this.getPot();
 			this.pot = 0;
 			this.betNum = 0;
+			this.potTo0(this.potText);
 
 		}
 
@@ -342,6 +351,7 @@ var rps = {
 			this.pot = 0;
 			this.betNum = 0;
 			this.getPot();
+			this.potTo0(this.potText);
 		}
 
 		else {
