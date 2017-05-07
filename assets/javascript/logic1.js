@@ -51,7 +51,6 @@ var rps = {
 	stand: function(){
 		//turns off the tie bar and returns to default
 		this.splitRow.style.display = "none";
-		this.onlyHandRow.style.display = "block";
 		this.twoHandRow.style.display = "none";
 		this.betRow.style.display = "block";
 
@@ -63,6 +62,7 @@ var rps = {
 		this.pot /= 2;
 		this.getPot();
 		this.potTo0(this.potText);
+		this.onlyHandOff.style.display = "block";
 
 		this.cHAImg.style.display = "none";
 		this.cHBImg.style.display = "none";
@@ -215,6 +215,7 @@ var rps = {
 			this.cHBImg.style.display = "none";
 			this.pHAImg.style.display = "none";
 			this.pHBImg.style.display = "none";
+			this.onlyHandRow.style.display = "none";
 			this.bet();
 			this.compPick();
 			this.gamelogic();
@@ -253,7 +254,8 @@ var rps = {
 			this.potTo0(this.potText);
 			this.betRow.style.display = "block";
 			this.twoHandRow.style.display = "none";
-			this.onlyHandRow.style.display = "block";
+			this.onlyHandRow.style.display = "none";
+			this.onlyHandOff.style.display = "block";
 			this.tie = false;
 		}
 
@@ -268,7 +270,7 @@ var rps = {
 			this.potTo0(this.potText);
 			this.betRow.style.display = "block";
 			this.twoHandRow.style.display = "none";
-			this.onlyHandRow.style.display = "block";
+			this.onlyHandOff.style.display = "block";
 			this.tie = false;
 		}
 
@@ -276,7 +278,6 @@ var rps = {
 		else {
 			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
 			this.splitRow.style.display = "block";
-			this.onlyHandRow.style.display = "none";
 			this.betRow.style.display = "none";
 		}
 
@@ -285,7 +286,6 @@ var rps = {
 		this.chipUpdate();
 		this.pHandA = "";
 		this.pHandB = "";
-		this.betCheck();
 
 	},
 
@@ -419,7 +419,6 @@ var rps = {
 	betCheck: function(){
 		//if bet is more than 0
 		if (this.betNum > 0 && !this.tie){
-			console.log("Bet higher than 0");
 			this.onlyHandOff.style.display = "none";
 			this.onlyHandRow.style.display = "block";
 		}
@@ -430,7 +429,7 @@ var rps = {
 		}
 
 		if (this.tie){
-			console.log("Tie");
+
 			this.onlyHandRow.style.display = "none";
 			this.onlyHandOff.style.display = "none";
 		}

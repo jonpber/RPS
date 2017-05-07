@@ -50,7 +50,7 @@ button {
 	font-size: 10px;
 }
 
-button:disabled {
+.hover:hover{
 	opacity: 0.5;
 }
 
