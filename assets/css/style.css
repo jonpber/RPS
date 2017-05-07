@@ -1,0 +1,56 @@
+body {
+	background-image: url("../images/swirl_pattern1.png");
+}
+
+.spacing {
+	background-color: white;
+	text-align: center;
+}
+
+.center {
+	margin-top: 50px;
+}
+
+h1, p {
+	font-family: 'Archivo Black', sans-serif;
+}
+
+h1 {
+	margin: 10px;
+}
+
+.refTalk {
+	position: absolute;
+	text-align: left;
+	margin-left: 30px;
+}
+
+.bubbleP {
+	position: absolute;
+	text-align: left;
+	top: 30px;
+	left: 55px;
+	width: 280px;
+}
+
+.hands {
+	position: absolute;
+	left: 40px;
+}
+
+#splitRow, #twoHands {
+	display: none;
+}
+
+#pHandImg, #cHandImg {
+	display: none;
+}
+
+button {
+	width: 100%;
+}
+
+button:disabled {
+	opacity: 0.5;
+}
+
