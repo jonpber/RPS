@@ -36,13 +36,10 @@ h1 {
 .hands {
 	position: absolute;
 	left: 40px;
+	top: 0;
 }
 
-#splitRow, #twoHands {
-	display: none;
-}
-
-#pHandImg, #cHandImg {
+#splitRow, #twoHands, #pHandImg, #cHandImg, #p2HandA, #p2HandB, #c2HandA, #c2HandB {
 	display: none;
 }
 
