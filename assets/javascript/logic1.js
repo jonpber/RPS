@@ -51,6 +51,7 @@ var rps = {
 		//turns off the tie bar and returns to default
 		this.splitRow.style.display = "none";
 		this.onlyHandRow.style.display = "block";
+		this.twoHandRow.style.display = "none";
 		this.betRow.style.display = "block";
 
 		this.stateText.textContent = "I guess you're not a risk-taker."
@@ -69,7 +70,14 @@ var rps = {
 		this.twoHandRow.style.display = "block";
 		this.pImg.style.display = "none";
 		this.compImg.style.display = "none";
+		this.cHAImg.style.display = "none";
+		this.cHBImg.style.display = "none";
+		this.pHAImg.style.display = "none";
+		this.pHBImg.style.display = "none";
 		this.splitBattle = true;
+		this.buttonDisabled(this.pHandABut, 3, false);
+		this.buttonDisabled(this.pHandBBut, 3, false);
+		
 
 	},
 
@@ -84,7 +92,7 @@ var rps = {
 			this.cHAImg.src = "assets/images/c2HandA" + this.compHandA + ".png";
 
 			this.compHandB = this.compHand[Math.floor(Math.random() * 3)];
-			this.cHAImg.src = "assets/images/c2HandB" + this.compHandB + ".png";
+			this.cHBImg.src = "assets/images/c2HandB" + this.compHandB + ".png";
 		}
 
 
@@ -154,32 +162,44 @@ var rps = {
 
 	gamelogic: function(){
 		if(!this.splitBattle){
-			var winner = this.handsCheck(this.pHand, this.compHand);
+			var winner = this.handsCheck(this.pHand, this.compHandPick);
 			this.roundEnd(winner);
 		}
 
 		else {
-
 			var winner1 = this.handsCheck(this.pHandA, this.compHandA);
 			var winner2 = this.handsCheck(this.pHandB, this.compHandB);
 
-			if (winner1 != winner2){
-				this.roundEnd("t");
-			}
+			console.log("winners:" + winner1 + " " + winner2);
 
-			else if (winner1 === "p" && winner2 === "p"){
+			if (winner1 === "p" && (winner2 === "p" || winner2 === "t")){
 				this.roundEnd("p");
 			}
 
-			else {
+			else if (winner1 === "t" && winner2 === "p"){
+				this.roundEnd("p");
+			}
+
+			else if (winner1 === "c" && (winner2 === "c" || winner2 === "t")){
 				this.roundEnd("c");
+			}
+
+			else if (winner1 === "t" && winner2 === "c"){
+				this.roundEnd("c");
+			}
+
+			else {
+				this.roundEnd("t");
 			}
 		} 
 	},
 
 	roundStart: function(){
-		console.log("Is this a splitBattle: " + this.splitBattle);
 		if(!this.splitBattle){
+			this.cHAImg.style.display = "none";
+			this.cHBImg.style.display = "none";
+			this.pHAImg.style.display = "none";
+			this.pHBImg.style.display = "none";
 			this.bet();
 			this.compPick();
 			this.gamelogic();
@@ -188,11 +208,14 @@ var rps = {
 		else {
 			this.compPick();
 			this.gamelogic();
+			this.pImg.style.display = "none";
+			this.compImg.style.display = "none";
 		}
 
 	},
 
 	roundEnd: function (x){
+		console.log("Is this a splitBattle: " + this.splitBattle);
 		if (!this.splitBattle){
 			this.pImg.style.display = "inline";
 			this.compImg.style.display = "inline";
@@ -202,6 +225,8 @@ var rps = {
 			this.cHAImg.style.display = "inline";
 			this.cHBImg.style.display = "inline";
 		}
+
+		this.splitBattle = false;
 
 		//player wins round
 		if (x === "p") {
@@ -215,7 +240,6 @@ var rps = {
 			this.betRow.style.display = "block";
 			this.twoHandRow.style.display = "none";
 			this.onlyHandRow.style.display = "block";
-
 		}
 
 		//comp wins round
@@ -291,7 +315,7 @@ var rps = {
 
 	buttonBR: function(){
 		this.pHBImg.src = "assets/images/p2HandBr.png";
-		this.pHBImg.style.display = "block";
+		this.pHBImg.style.display = "inline";
 		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "r";
 		this.roundStart();
