@@ -38,11 +38,19 @@ h1 {
 	left: 40px;
 }
 
-#splitRow, #onlyHand, #twoHands {
+#splitRow, #twoHands {
 	display: none;
 }
 
 #pHandImg, #cHandImg {
 	display: none;
+}
+
+button {
+	width: 100%;
+}
+
+button:disabled {
+	opacity: 0.5;
 }
 

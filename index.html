@@ -53,16 +53,30 @@
 			</div>
 		</div>
 
+		<div id="betRow" class="row">
+			<div class="col-lg-3 spacing">
+				<button onclick="rps.betMinus10()">-10</button>
+			</div>	
+			<div class="col-lg-3 spacing">
+				<button onclick="rps.betMinus1()">-1</button>
+			</div>	
+			<div class="col-lg-3 spacing">
+				<button onclick="rps.betPlus1()">+1</button>
+			</div>	
+			<div class="col-lg-3 spacing">
+				<button onclick="rps.betPlus10()">+10</button>
+			</div>	
+		</div>
 
 		<div id="onlyHand" class="row">
 			<div class="col-lg-4 spacing">
-				<button onclick="rps.buttonR()">Rock</button>
+				<button class="oneHandButton" onclick="rps.buttonR()" disabled>Rock</button>
 			</div>	
 			<div class="col-lg-4 spacing">
-				<button onclick="rps.buttonP()">Paper</button>
+				<button class="oneHandButton" onclick="rps.buttonP()" disabled>Paper</button>
 			</div>	
 			<div class="col-lg-4 spacing">
-				<button onclick="rps.buttonS()">Scissors</button>
+				<button class="oneHandButton" onclick="rps.buttonS()" disabled>Scissors</button>
 			</div>	
 		</div>
 
@@ -101,23 +115,7 @@
 			</div>	
 		</div>
 
-		<div id="betRow" class="row">
-			<div class="col-lg-2 spacing">
-				<button onclick="rps.betMinus10()">-10</button>
-			</div>	
-			<div class="col-lg-2 spacing">
-				<button onclick="rps.betMinus1()">-1</button>
-			</div>	
-			<div class="col-lg-4 spacing">
-				<button onclick="rps.bet()">Bet</button>
-			</div>	
-			<div class="col-lg-2 spacing">
-				<button onclick="rps.betPlus1()">+1</button>
-			</div>	
-			<div class="col-lg-2 spacing">
-				<button onclick="rps.betPlus10()">+10</button>
-			</div>	
-		</div>
+
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

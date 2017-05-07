@@ -18,7 +18,6 @@ var rps = {
 	twoHandRow: document.getElementById("twoHands"),
 	betRow: document.getElementById("betRow"),
 
-
 	compHand: ["r","p","s"],
 
 	pHand: "",
@@ -30,6 +29,8 @@ var rps = {
 	pWon: false,
 	tie: false,
 
+	oneHandChoices: document.getElementsByClassName("oneHandButton"),
+
 	hyperbole: [" was thoroughly destroyed by ", " faced bitter defeat by ", " lost to "],
 
 	chips: 50,
@@ -39,9 +40,24 @@ var rps = {
 		this.onlyHandRow.style.display = "none";
 	},
 
+	betCheck: function(){
+		if (this.betNum > 0){
+			for (var i = 0; i < 3; i++){
+				this.oneHandChoices[i].disabled = false;
+			}
+			
+		}
+		else {
+			for (var i = 0; i < 3; i++){
+				this.oneHandChoices[i].disabled = true;
+			}
+		}
+	},
+
+
 	stand: function(){
 		this.splitRow.style.display = "none";
-		//this.onlyHandRow.style.display = "block";
+		this.onlyHandRow.style.display = "block";
 		this.betRow.style.display = "block";
 		this.stateText.textContent = "I guess you're not a risk-taker."
 	},
@@ -134,13 +150,15 @@ var rps = {
 
 	reset: function(){
 		this.chips += this.betNum;
-		this.betNum = 0;
+		if (this.pWon){
+			this.chips += this.betNum;
+		}
+		if (this.betNum > this.chips){
+			this.betNum = this.chips;
+		}
 		this.betText.textContent = this.betNum;
 		this.chipText.textContent = this.chips;
-		this.onlyHandRow.style.display = "none";
-		if(!this.tie){
-			this.betRow.style.display = "block";
-		}
+		this.betCheck();
 
 	},
 
@@ -148,14 +166,11 @@ var rps = {
 		if (this.betNum > 0){
 			this.chips -= this.betNum;
 			this.chipText.textContent = this.chips;
-			this.onlyHandRow.style.display = "block";
-			this.betRow.style.display = "none";
 		}
 
 		else {
 			this.stateText.textContent = "You have to make a bet!";
 		}
-
 
 	},
 
@@ -169,6 +184,8 @@ var rps = {
 			this.betNum = 0;
 			this.betText.textContent = this.betNum;
 		}
+
+		this.betCheck();
 	},
 
 	betMinus1: function() {
@@ -176,6 +193,9 @@ var rps = {
 			this.betNum -= 1;
 			this.betText.textContent = this.betNum;
 		}
+		console.log(this.betNum);
+		this.betCheck();
+
 	},
 
 	betPlus1: function() {
@@ -183,6 +203,8 @@ var rps = {
 			this.betNum += 1;
 			this.betText.textContent = this.betNum;
 		}
+
+		this.betCheck();
 	},
 
 	betPlus10: function() {
@@ -190,6 +212,8 @@ var rps = {
 			this.betNum += 10;
 			this.betText.textContent = this.betNum;
 		}
+
+		this.betCheck();
 	},
 
 	compPick: function () {
@@ -200,7 +224,6 @@ var rps = {
 
 	updateScore: function (){
 		if (this.pWon && !this.tie) {
-			this.betNum *= 2;
 			this.stateText.textContent = "Computer's " + this.compHandPick + this.hyperbole[Math.floor(Math.random() * 3)] + "Player's " + this.pHand;
 			
 		}
