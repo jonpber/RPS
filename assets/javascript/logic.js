@@ -53,14 +53,13 @@ var rps = {
 	},
 
 	stand: function(){
+		this.betNum = 0;
 		this.splitRow.style.display = "none";
 		this.onlyHandRow.style.display = "block";
 		this.betRow.style.display = "block";
 		this.stateText.textContent = "I guess you're not a risk-taker."
 		this.tie = false;
 		this.pot /= 2;
-		this.betNum = 0;
-		this.betText = this.betNum;
 		this.getPot();
 	},
 
