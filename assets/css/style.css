@@ -37,3 +37,12 @@ h1 {
 	position: absolute;
 	left: 40px;
 }
+
+#splitRow, #onlyHand, #twoHands {
+	display: none;
+}
+
+#pHandImg, #cHandImg {
+	display: none;
+}
+

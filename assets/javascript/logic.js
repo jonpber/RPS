@@ -1,126 +1,235 @@
-var wins = 0;
-var losses = 0;
-var ties = 0;
+var rps = {
+	wins: 0,
+	losses: 0,
+	ties: 0,
 
-var winText = document.getElementById("wins");
-var lossText = document.getElementById("losses");
-var stateText = document.getElementById("stateText");
+	chipText: document.getElementById("chips"),
+	betText: document.getElementById("bet"),
+	betNum: 0,
+	chips: 50,
 
-var pImg = document.getElementById("pHandImg");
-var compImg = document.getElementById("cHandImg");
+	stateText: document.getElementById("stateText"),
 
-var compHand = ["r","p","s"];
+	pImg: document.getElementById("pHandImg"),
+	compImg: document.getElementById("cHandImg"),
 
-var pHand = "";
-var compHandPick = "";
-
-var pWon = false;
-var tie = false;
-
-var hyperbole = [" was thoroughly destroyed by ", " faced bitter defeat by ", " lost to "];
-
-var chips = 50;
+	splitRow: document.getElementById("splitRow"),
+	onlyHandRow: document.getElementById("onlyHand"),
+	twoHandRow: document.getElementById("twoHands"),
+	betRow: document.getElementById("betRow"),
 
 
+	compHand: ["r","p","s"],
+
+	pHand: "",
+	pHandA: "",
+	pHandB: "",
+	compHandPick: "",
+	compHandA: "",
+	compHandB: "",
+	pWon: false,
+	tie: false,
+
+	hyperbole: [" was thoroughly destroyed by ", " faced bitter defeat by ", " lost to "],
+
+	chips: 50,
+
+	tieScenario: function (){
+		this.splitRow.style.display = "block";
+		this.onlyHandRow.style.display = "none";
+	},
+
+	stand: function(){
+		this.splitRow.style.display = "none";
+		//this.onlyHandRow.style.display = "block";
+		this.betRow.style.display = "block";
+		this.stateText.textContent = "I guess you're not a risk-taker."
+	},
+
+	split: function(){
+		this.splitRow.style.display = "none";
+		this.twoHandRow.style.display = "block";
+	},
+
+	handsCheck(x, y){
+		if (x === "r"){
+			if (y === "s"){
+				this.pWon = true;
+				this.tie = false;
+			}
+
+			else {
+				this.pWon = false;
+				this.tie = false;
+			}
+		}
+
+		else if (x === "s"){
+			if (y === "p"){
+				this.pWon = true;
+				this.tie = false;
+			}
+
+			else {
+				this.pWon = false;
+				this.tie = false;
+			}
+		}
+
+		else {
+			if (y === "r"){
+				this.pWon = true;
+				this.tie = false;
+			}
+
+			else {
+				this.pWon = false;
+				this.tie = false;
+			}
+		}
+
+		console.log(this.betNum);
+
+		if(!this.pWon && x != y){
+			this.betNum = 0;
+		}
+
+		console.log(this.betNum);
+
+		if (x === y){
+			this.tie = true;
+			this.pWon = false;
+		}
+
+		console.log(this.betNum);
+
+		this.updateScore();
+
+	},
+
+	buttonR: function () {
+		this.compPick();
+		this.pHand = "r";
+		this.pImg.src = "assets/images/pHandr.png";
+		this.handsCheck(this.pHand, this.compHandPick);
+
+	},
 
 
-function buttonR () {
-	CompPick();
-	pHand = "r";
-	pImg.src = "assets/images/pHandr.png";
-	if (compHandPick === "r"){
-		tie = true;
-		pWon = false;
+	buttonP: function () {
+		this.compPick();
+		this.pImg.src = "assets/images/pHandp.png";
+		this.pHand = "p";
+		this.handsCheck(this.pHand, this.compHandPick);
+
+	},
+
+	buttonS: function () {
+		this.compPick();
+		this.pHand = "s";
+		this.pImg.src = "assets/images/pHands.png";
+		this.handsCheck(this.pHand, this.compHandPick);
+		
+	},
+
+	reset: function(){
+		this.chips += this.betNum;
+		this.betNum = 0;
+		this.betText.textContent = this.betNum;
+		this.chipText.textContent = this.chips;
+		this.onlyHandRow.style.display = "none";
+		if(!this.tie){
+			this.betRow.style.display = "block";
+		}
+
+	},
+
+	bet: function (){
+		if (this.betNum > 0){
+			this.chips -= this.betNum;
+			this.chipText.textContent = this.chips;
+			this.onlyHandRow.style.display = "block";
+			this.betRow.style.display = "none";
+		}
+
+		else {
+			this.stateText.textContent = "You have to make a bet!";
+		}
+
+
+	},
+
+	betMinus10: function() {
+		if (this.betNum - 10 >= 0){
+			this.betNum -= 10;
+			this.betText.textContent = this.betNum;
+		}
+
+		else {
+			this.betNum = 0;
+			this.betText.textContent = this.betNum;
+		}
+	},
+
+	betMinus1: function() {
+		if (this.betNum - 1 >= 0){
+			this.betNum -= 1;
+			this.betText.textContent = this.betNum;
+		}
+	},
+
+	betPlus1: function() {
+		if (this.betNum + 1 <= this.chips){
+			this.betNum += 1;
+			this.betText.textContent = this.betNum;
+		}
+	},
+
+	betPlus10: function() {
+		if (this.betNum + 10 <= this.chips){
+			this.betNum += 10;
+			this.betText.textContent = this.betNum;
+		}
+	},
+
+	compPick: function () {
+		this.compHandPick = this.compHand[Math.floor(Math.random() * 3)];
+		this.compImg.src = "assets/images/cHand" + this.compHandPick + ".png";
+		return this.compHandPick;
+	},
+
+	updateScore: function (){
+		if (this.pWon && !this.tie) {
+			this.betNum *= 2;
+			this.stateText.textContent = "Computer's " + this.compHandPick + this.hyperbole[Math.floor(Math.random() * 3)] + "Player's " + this.pHand;
+			
+		}
+
+		else if (!this.pWon && !this.tie){
+			this.stateText.textContent = "Players's " + this.pHand + this.hyperbole[Math.floor(Math.random() * 3)] + "Computer's " + this.compHandPick;
+		}
+
+		else if (this.tie) {
+			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
+			this.tieScenario();
+		}
+
+		this.pImg.style.display = "inline";
+		this.compImg.style.display = "inline";
+		this.reset();
+
+
+
 	}
 
-	else if (compHandPick === "s"){
-		wins += 1;
-		pWon = true;
-		tie = false;
 
-	}
-
-	else {
-		losses += 1;
-		pWon = false;
-		tie = false;
-	}
-
-	updateScore();
 }
 
 
-function buttonP () {
-	CompPick();
-	pImg.src = "assets/images/pHandp.png";
-	pHand = "p";
-	if (compHandPick === "p"){
-		tie = true;
-		pWon = false;
-	}
-
-	else if (compHandPick === "r"){
-		wins += 1;
-		pWon = true;
-		tie = false;
-	}
-
-	else {
-		losses += 1;
-		pWon = false;
-		tie = false;
-	}
-
-	updateScore();
-
-}
-
-function buttonS () {
-	CompPick();
-	pHand = "s";
-	pImg.src = "assets/images/pHands.png";
-	if (compHandPick === "s"){
-		tie = true;
-		pWon = false;
-	}
-
-	else if (compHandPick === "p"){
-		wins += 1;
-		pWon = true;
-		tie = false;
-	}
-
-	else {
-		losses += 1;
-		pWon = false;
-		tie = false;
-	}
-
-	updateScore();
-}
 
 
-function CompPick () {
-	compHandPick = compHand[Math.floor(Math.random() * 3)];
-	cHandImg.src = "assets/images/cHand" + compHandPick + ".png";
 
 
-	return compHandPick;
-}
 
-function updateScore(){
-	winText.textContent = "Wins: " + wins;
-	lossText.textContent = "Loses: " + losses;
-	if (pWon && !tie) {
-		stateText.textContent = "Computer's " + compHandPick + hyperbole[Math.floor(Math.random() * 3)] + "Player's " + pHand;
-	}
 
-	else if (!pWon && !tie){
-		stateText.textContent = "Players's " + pHand + hyperbole[Math.floor(Math.random() * 3)] + "Computer's " + compHandPick;
-	}
-
-	else if (tie) {
-		stateText.textContent = "A tie. How boring."
-	}
-}
 

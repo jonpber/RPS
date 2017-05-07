@@ -24,8 +24,8 @@
 		</div>
 
 		<div class="row">
-			<p class="col-lg-6 spacing" id="wins">Wins</p>
-			<p class="col-lg-6 spacing" id="losses">Losses</p>
+			<p class="col-lg-6 spacing">Chips: <span id="chips">50</span></p>
+			<p class="col-lg-6 spacing">Bet: <span id="bet">0</span></p>
 		</div>
 
 
@@ -54,30 +54,68 @@
 		</div>
 
 
-		<div class="row">
+		<div id="onlyHand" class="row">
 			<div class="col-lg-4 spacing">
-				<button onclick="buttonR()">Rock</button>
+				<button onclick="rps.buttonR()">Rock</button>
 			</div>	
 			<div class="col-lg-4 spacing">
-				<button onclick="buttonP()">Paper</button>
+				<button onclick="rps.buttonP()">Paper</button>
 			</div>	
 			<div class="col-lg-4 spacing">
-				<button onclick="buttonS()">Scissors</button>
+				<button onclick="rps.buttonS()">Scissors</button>
 			</div>	
 		</div>
 
-		<div class="row">
-			<div class="col-lg-3 spacing">
-				<button onclick="buttonR()">Bet -10</button>
+		<div id="twoHands" class="row">
+			<div class="col-lg-6 spacing">
+				<div class="col-lg-4 spacing">
+				<button onclick="rps.buttonR()">Rock</button>
 			</div>	
-			<div class="col-lg-3 spacing">
-				<button onclick="buttonR()">Bet -1</button>
+			<div class="col-lg-4 spacing">
+				<button onclick="rps.buttonP()">Paper</button>
 			</div>	
-			<div class="col-lg-3 spacing">
-				<button onclick="buttonP()">Bet +1</button>
+			<div class="col-lg-4 spacing">
+				<button onclick="rps.buttonS()">Scissors</button>
 			</div>	
-			<div class="col-lg-3 spacing">
-				<button onclick="buttonP()">Bet +10</button>
+
+			</div>	
+			<div class="col-lg-6 spacing">
+				<div class="col-lg-4 spacing">
+				<button onclick="rps.buttonR()">Rock</button>
+			</div>	
+			<div class="col-lg-4 spacing">
+				<button onclick="rps.buttonP()">Paper</button>
+			</div>	
+			<div class="col-lg-4 spacing">
+				<button onclick="rps.buttonS()">Scissors</button>
+			</div>	
+			</div>	
+		</div>
+
+		<div id="splitRow" class="row">
+			<div class="col-lg-6 spacing">
+				<button onclick="rps.stand()">Stand</button>
+			</div>	
+			<div class="col-lg-6 spacing">
+				<button onclick="rps.split()">Split</button>
+			</div>	
+		</div>
+
+		<div id="betRow" class="row">
+			<div class="col-lg-2 spacing">
+				<button onclick="rps.betMinus10()">-10</button>
+			</div>	
+			<div class="col-lg-2 spacing">
+				<button onclick="rps.betMinus1()">-1</button>
+			</div>	
+			<div class="col-lg-4 spacing">
+				<button onclick="rps.bet()">Bet</button>
+			</div>	
+			<div class="col-lg-2 spacing">
+				<button onclick="rps.betPlus1()">+1</button>
+			</div>	
+			<div class="col-lg-2 spacing">
+				<button onclick="rps.betPlus10()">+10</button>
 			</div>	
 		</div>
 	</div>
