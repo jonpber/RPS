@@ -7,6 +7,7 @@ var rps = {
 	betText: document.getElementById("bet"),
 	betNum: 0,
 	chips: 50,
+	pot: 0,
 
 	stateText: document.getElementById("stateText"),
 
@@ -59,15 +60,24 @@ var rps = {
 		}
 	},
 
+	bet: function(){
+		this.pot = this.betNum * 2;
+	},
+
 
 	stand: function(){
 		this.splitRow.style.display = "none";
 		this.onlyHandRow.style.display = "block";
 		this.betRow.style.display = "block";
 		this.stateText.textContent = "I guess you're not a risk-taker."
+		this.tie = false;
+		this.chips += this.betNum;
+		this.cashout();
+		this.reset();
 	},
 
 	split: function(){
+		this.stateText.textContent = "Pick two hands!";
 		this.splitRow.style.display = "none";
 		this.twoHandRow.style.display = "block";
 		this.pImg.style.display = "none";
@@ -130,21 +140,27 @@ var rps = {
 		}
 
 		if(!this.pWon && !this.tie){
-			this.betNum = 0;
-			this.updateScore();
+			this.pot = 0;
 		}
 
 		else if (this.tie){
 			this.tieScenario();
-			this.updateScore();
+			
 		}
 
-		else {
-			this.updateScore();
-		}
+		this.updateScore();
+
+	},
+
+	takeOutChips: function(){
+		console.log("Pre bet: " + this.chips);
+		this.chips -= this.betNum;
+		this.bet();
+		console.log("Post bet: " + this.chips);
 	},
 
 	buttonR: function () {
+		this.takeOutChips();
 		this.compPick();
 		this.pHand = "r";
 		this.pImg.src = "assets/images/pHandr.png";
@@ -154,6 +170,7 @@ var rps = {
 
 
 	buttonP: function () {
+		this.takeOutChips();
 		this.compPick();
 		this.pImg.src = "assets/images/pHandp.png";
 		this.pHand = "p";
@@ -162,6 +179,7 @@ var rps = {
 	},
 
 	buttonS: function () {
+		this.takeOutChips();
 		this.compPick();
 		this.pHand = "s";
 		this.pImg.src = "assets/images/pHands.png";
@@ -193,30 +211,22 @@ var rps = {
 		this.pHBImg.src = "assets/images/p2HandBs.png";
 	},
 
+	cashout: function(){
+		if (!this.tie && this.pWon){
+			this.chips += this.pot;
+			this.pot = 0;
+		}
 
-	reset: function(){
-		this.chips += this.betNum;
-		if (this.pWon){
-			this.chips += this.betNum;
+		else if (!this.tie && !this.pWon){
+			this.pot = 0;
 		}
-		if (this.betNum > this.chips){
-			this.betNum = this.chips;
-		}
-		this.betText.textContent = this.betNum;
-		this.chipText.textContent = this.chips;
-		this.betCheck();
 
 	},
 
-	bet: function (){
-		if (this.betNum > 0){
-			this.chips -= this.betNum;
-			this.chipText.textContent = this.chips;
-		}
-
-		else {
-			this.stateText.textContent = "You have to make a bet!";
-		}
+	reset: function(){
+		this.betText.textContent = this.betNum;
+		this.chipText.textContent = this.chips;
+		this.betCheck();
 
 	},
 
@@ -239,7 +249,6 @@ var rps = {
 			this.betNum -= 1;
 			this.betText.textContent = this.betNum;
 		}
-		console.log(this.betNum);
 		this.betCheck();
 
 	},
@@ -271,6 +280,7 @@ var rps = {
 	updateScore: function (){
 		if (this.pWon && !this.tie) {
 			this.stateText.textContent = "Computer's " + this.compHandPick + this.hyperbole[Math.floor(Math.random() * 3)] + "Player's " + this.pHand;
+			this.cashout();
 			this.reset();
 			this.pImg.style.display = "inline";
 			this.compImg.style.display = "inline";
@@ -279,16 +289,18 @@ var rps = {
 
 		else if (!this.pWon && !this.tie){
 			this.stateText.textContent = "Players's " + this.pHand + this.hyperbole[Math.floor(Math.random() * 3)] + "Computer's " + this.compHandPick;
+			this.cashout();
 			this.reset();
 			this.pImg.style.display = "inline";
 			this.compImg.style.display = "inline";
 
 		}
 
-		else if (this.tie) {
+		else {
 			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
 			this.pImg.style.display = "inline";
 			this.compImg.style.display = "inline";
+			this.reset();
 			this.tieScenario();
 		}
 
