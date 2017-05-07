@@ -37,6 +37,7 @@ var rps = {
 	cHBImg: document.getElementById("c2HandB"),
 	pWon: false,
 	tie: false,
+	splitBattle: false,
 
 	lastBet: 0,
 
@@ -46,18 +47,17 @@ var rps = {
 
 	chips: 50,
 
-	tieScenario: function (){
-		this.splitRow.style.display = "block";
-		this.onlyHandRow.style.display = "none";
-		this.betRow.style.display = "none";
-	},
-
 	stand: function(){
-		this.betNum = 0;
+		//turns off the tie bar and returns to default
 		this.splitRow.style.display = "none";
 		this.onlyHandRow.style.display = "block";
+		this.twoHandRow.style.display = "none";
 		this.betRow.style.display = "block";
+
 		this.stateText.textContent = "I guess you're not a risk-taker."
+
+		//Resets bet, turns off tie, takes back share of pot, and resets it to 0.
+		this.betNum = 0;
 		this.tie = false;
 		this.pot /= 2;
 		this.getPot();
@@ -65,11 +65,45 @@ var rps = {
 	},
 
 	split: function(){
-		this.stateText.textContent = "Pick two hands!";
-		this.splitRow.style.display = "none";
-		this.twoHandRow.style.display = "block";
-		this.pImg.style.display = "none";
-		this.compImg.style.display = "none";
+		if (this.chips - (this.betNum * 2) >= 0){
+			this.chips -= this.betNum;
+			this.betNum *= 2;
+			this.bet();
+			this.chipUpdate();
+
+			this.stateText.textContent = "Pick two hands!";
+			this.splitRow.style.display = "none";
+			this.twoHandRow.style.display = "block";
+			this.pImg.style.display = "none";
+			this.compImg.style.display = "none";
+			this.cHAImg.style.display = "none";
+			this.cHBImg.style.display = "none";
+			this.pHAImg.style.display = "none";
+			this.pHBImg.style.display = "none";
+			this.splitBattle = true;
+			this.buttonDisabled(this.pHandABut, 3, false);
+			this.buttonDisabled(this.pHandBBut, 3, false);
+		}
+
+		else {
+			this.stateText.textContent = "Looks like you don't have enough chips."
+		}
+	},
+
+	compPick: function () {
+		if (!this.splitBattle){
+			this.compHandPick = this.compHand[Math.floor(Math.random() * 3)];
+			this.compImg.src = "assets/images/cHand" + this.compHandPick + ".png";
+		}
+
+		else {
+			this.compHandA = this.compHand[Math.floor(Math.random() * 3)];
+			this.cHAImg.src = "assets/images/c2HandA" + this.compHandA + ".png";
+
+			this.compHandB = this.compHand[Math.floor(Math.random() * 3)];
+			this.cHBImg.src = "assets/images/c2HandB" + this.compHandB + ".png";
+		}
+
 
 	},
 
@@ -78,16 +112,19 @@ var rps = {
 			if (y === "s"){
 				this.pWon = true;
 				this.tie = false;
+				return "p";
 			}
 
 			else if (y === "p"){
 				this.pWon = false;
 				this.tie = false;
+				return "c";
 			}
 
 			else {
 				this.pWon = false;
 				this.tie = true;
+				return "t";
 			}
 		}
 
@@ -95,16 +132,19 @@ var rps = {
 			if (y === "p"){
 				this.pWon = true;
 				this.tie = false;
+				return "p";
 			}
 
 			else if (y === "r"){
 				this.pWon = false;
 				this.tie = false;
+				return "c";
 			}
 
 			else {
 				this.pWon = false;
 				this.tie = true;
+				return "t";
 			}
 		}
 
@@ -112,63 +152,160 @@ var rps = {
 			if (y === "r"){
 				this.pWon = true;
 				this.tie = false;
+				return "p";
 			}
 
 			else if (y === "s"){
 				this.pWon = false;
 				this.tie = false;
+				return "c";
 			}
 
 			else {
 				this.pWon = false;
 				this.tie = true;
+				return "t";
 			}
 		}
+	},
 
-		if(!this.pWon && !this.tie){
-			console.log("lose");
-			this.pot = 0;
+	gamelogic: function(){
+		if(!this.splitBattle){
+			var winner = this.handsCheck(this.pHand, this.compHandPick);
+			this.roundEnd(winner);
 		}
 
-		else if (this.tie){
-			console.log("tie");
-			this.tieScenario();
-			
+		else {
+			var winner1 = this.handsCheck(this.pHandA, this.compHandA);
+			var winner2 = this.handsCheck(this.pHandB, this.compHandB);
+
+			console.log("winners:" + winner1 + " " + winner2);
+
+			if (winner1 === "p" && (winner2 === "p" || winner2 === "t")){
+				this.roundEnd("p");
+			}
+
+			else if (winner1 === "t" && winner2 === "p"){
+				this.roundEnd("p");
+			}
+
+			else if (winner1 === "c" && (winner2 === "c" || winner2 === "t")){
+				this.roundEnd("c");
+			}
+
+			else if (winner1 === "t" && winner2 === "c"){
+				this.roundEnd("c");
+			}
+
+			else {
+				this.roundEnd("t");
+			}
+		} 
+	},
+
+	roundStart: function(){
+		if(!this.splitBattle){
+			this.cHAImg.style.display = "none";
+			this.cHBImg.style.display = "none";
+			this.pHAImg.style.display = "none";
+			this.pHBImg.style.display = "none";
+			this.bet();
+			this.compPick();
+			this.gamelogic();
 		}
 
-		this.updateScore();
+		else {
+			this.compPick();
+			this.gamelogic();
+			this.pImg.style.display = "none";
+			this.compImg.style.display = "none";
+		}
 
 	},
 
+	roundEnd: function (x){
+		console.log("Is this a splitBattle: " + this.splitBattle);
+		if (!this.splitBattle){
+			this.pImg.style.display = "inline";
+			this.compImg.style.display = "inline";
+		}
+
+		else {
+			this.cHAImg.style.display = "inline";
+			this.cHBImg.style.display = "inline";
+		}
+
+		this.splitBattle = false;
+
+		//player wins round
+		if (x === "p") {
+			this.stateText.textContent = "Computer " +  this.hyperbole[Math.floor(Math.random() * 3)] + "Player.";
+			
+			//Player gets pot, resets pot, and changes pot text.
+			this.getPot();
+			this.pot = 0;
+			this.betNum = 0;
+			this.potTo0(this.potText);
+			this.betRow.style.display = "block";
+			this.twoHandRow.style.display = "none";
+			this.onlyHandRow.style.display = "block";
+		}
+
+		//comp wins round
+		else if (x === "c"){
+			this.stateText.textContent = "Player " + this.hyperbole[Math.floor(Math.random() * 3)] + "Computer.";
+			
+			//Player loses pot, resets pot, and changes pot text.
+			this.pot = 0;
+			this.betNum = 0;
+			this.getPot();
+			this.potTo0(this.potText);
+			this.betRow.style.display = "block";
+			this.twoHandRow.style.display = "none";
+			this.onlyHandRow.style.display = "block";
+		}
+
+		//round ends in tie
+		else {
+			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
+			
+			//turns on the split bar option
+			this.splitRow.style.display = "block";
+			this.onlyHandRow.style.display = "none";
+			this.betRow.style.display = "none";
+		}
+
+		//Bet Number either resets to 0 or stays consistent
+		this.betText.textContent = this.betNum;
+		this.chipUpdate();
+	},
+
+
 	buttonR: function () {
-		this.bet();
-		this.compPick();
 		this.pHand = "r";
 		this.pImg.src = "assets/images/pHandr.png";
-		this.handsCheck(this.pHand, this.compHandPick);
+		this.roundStart();
+
 	},
 
 	buttonP: function () {
-		this.bet();
-		this.compPick();
 		this.pImg.src = "assets/images/pHandp.png";
 		this.pHand = "p";
-		this.handsCheck(this.pHand, this.compHandPick);
+		this.roundStart();
 	},
 
 	buttonS: function () {
-		this.bet();
-		this.compPick();
 		this.pHand = "s";
 		this.pImg.src = "assets/images/pHands.png";
-		this.handsCheck(this.pHand, this.compHandPick);	
+		this.roundStart();
 	},
 
 	buttonAR: function(){
 		this.pHAImg.src = "assets/images/p2HandAr.png";
-		this.pHAImg.style.display = "block";
-		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "r";
+		this.pHAImg.style.display = "inline";
+		this.buttonDisabled(this.pHandABut, 3, true);
+
 	},
 
 	buttonAP: function(){
@@ -187,9 +324,11 @@ var rps = {
 
 	buttonBR: function(){
 		this.pHBImg.src = "assets/images/p2HandBr.png";
-		this.pHBImg.style.display = "block";
+		this.pHBImg.style.display = "inline";
 		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "r";
+		this.roundStart();
+
 	},
 
 	buttonBP: function(){
@@ -230,18 +369,7 @@ var rps = {
 
 	},
 
-	//This function ensures there is a bet before you are allowed to play.
-	betCheck: function(){
-		if (this.betNum > 0){
-			this.buttonDisabled(this.oneHandChoices, 3, false);
-			
-		}
-		else {
-			this.buttonDisabled(this.oneHandChoices, 3, true);
-		}
-	},
-
-	//Takes your bet and matches it by the comp.
+	//Takes your bet and matches it by the comp to generate the pot.
 	bet: function(){
 		this.pot = this.betNum * 2;
 		this.potText.textContent = this.pot;
@@ -253,6 +381,18 @@ var rps = {
 		this.betText.textContent = this.betNum;
 		this.chipText.textContent = this.chips;
 		this.betCheck();
+	},
+
+	//This function ensures there is a bet before you are allowed to play.
+	betCheck: function(){
+		//if bet is more than 0
+		if (this.betNum > 0){
+			this.buttonDisabled(this.oneHandChoices, 3, false);
+			
+		}
+		else {
+			this.buttonDisabled(this.oneHandChoices, 3, true);
+		}
 	},
 
 	//these buttons add or subtract your bet
@@ -305,25 +445,19 @@ var rps = {
 		this.betCheck();
 	},
 
-
+	//disables/enables buttons
 	buttonDisabled: function (arr, num, truth){
 		for (var i = 0; i < num; i++){
 			arr[i].disabled = truth;
 		}
 	},
 
+	//puts a small buffer between win/loss/stand and pot resuming to 0
 	potTo0: function(x){
 		setTimeout(function () {
 	        this.pot = 0;
 	        x.textContent = this.pot;
 	    	}, 1500);
-	},
-
-
-	compPick: function () {
-		this.compHandPick = this.compHand[Math.floor(Math.random() * 3)];
-		this.compImg.src = "assets/images/cHand" + this.compHandPick + ".png";
-		return this.compHandPick;
 	},
 
 	getPot: function(){
@@ -332,59 +466,6 @@ var rps = {
 		this.lastBet = 0;
 		this.chipUpdate();
 	},
-
-	updateScore: function (){
-		this.pImg.style.display = "inline";
-		this.compImg.style.display = "inline";
-
-		if (this.pWon && !this.tie) {
-			this.stateText.textContent = "Computer " +  this.hyperbole[Math.floor(Math.random() * 3)] + "Player";
-			this.getPot();
-			this.pot = 0;
-			this.betNum = 0;
-			this.potTo0(this.potText);
-
-		}
-
-		else if (!this.pWon && !this.tie){
-			this.stateText.textContent = "Players " + this.pHand + this.hyperbole[Math.floor(Math.random() * 3)] + "Computer ";
-			this.pot = 0;
-			this.betNum = 0;
-			this.getPot();
-			this.potTo0(this.potText);
-		}
-
-		else {
-			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
-			this.tieScenario();
-		}
-		this.betText.textContent = this.betNum;
-		this.chipUpdate();
-	},
-
-	updateScore1: function (){
-		this.pImg.style.display = "inline";
-		this.compImg.style.display = "inline";
-		if (this.pWon && !this.tie) {
-			this.stateText.textContent = "Computer " +  this.hyperbole[Math.floor(Math.random() * 3)] + "Player";
-			this.getPot();
-
-		}
-
-		else if (!this.pWon && !this.tie){
-			this.stateText.textContent = "Players " + this.pHand + this.hyperbole[Math.floor(Math.random() * 3)] + "Computer ";
-			this.getPot();
-		}
-
-		else {
-			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
-			this.tieScenario();
-		}
-
-		this.chipUpdate();
-
-	}
-
 
 }
 
