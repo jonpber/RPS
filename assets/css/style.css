@@ -3,12 +3,13 @@ body {
 }
 
 .spacing {
-	background-color: white;
 	text-align: center;
 }
 
 .center {
 	margin-top: 50px;
+	background-color: white;
+	border: 1px solid wheat;
 }
 
 h1, p {
@@ -44,7 +45,9 @@ h1 {
 }
 
 button {
-	width: 100%;
+	width: 50px;
+	height: 50px;
+	font-size: 10px;
 }
 
 button:disabled {
