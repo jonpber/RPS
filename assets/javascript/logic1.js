@@ -65,20 +65,29 @@ var rps = {
 	},
 
 	split: function(){
-		this.stateText.textContent = "Pick two hands!";
-		this.splitRow.style.display = "none";
-		this.twoHandRow.style.display = "block";
-		this.pImg.style.display = "none";
-		this.compImg.style.display = "none";
-		this.cHAImg.style.display = "none";
-		this.cHBImg.style.display = "none";
-		this.pHAImg.style.display = "none";
-		this.pHBImg.style.display = "none";
-		this.splitBattle = true;
-		this.buttonDisabled(this.pHandABut, 3, false);
-		this.buttonDisabled(this.pHandBBut, 3, false);
-		
+		if (this.chips - (this.betNum * 2) >= 0){
+			this.chips -= this.betNum;
+			this.betNum *= 2;
+			this.bet();
+			this.chipUpdate();
 
+			this.stateText.textContent = "Pick two hands!";
+			this.splitRow.style.display = "none";
+			this.twoHandRow.style.display = "block";
+			this.pImg.style.display = "none";
+			this.compImg.style.display = "none";
+			this.cHAImg.style.display = "none";
+			this.cHBImg.style.display = "none";
+			this.pHAImg.style.display = "none";
+			this.pHBImg.style.display = "none";
+			this.splitBattle = true;
+			this.buttonDisabled(this.pHandABut, 3, false);
+			this.buttonDisabled(this.pHandBBut, 3, false);
+		}
+
+		else {
+			this.stateText.textContent = "Looks like you don't have enough chips."
+		}
 	},
 
 	compPick: function () {
