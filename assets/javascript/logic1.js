@@ -87,8 +87,6 @@ var rps = {
 			this.pHAImg.style.display = "none";
 			this.pHBImg.style.display = "none";
 			this.splitBattle = true;
-			this.buttonDisabled(this.pHandABut, 3, false);
-			this.buttonDisabled(this.pHandBBut, 3, false);
 		}
 
 		else {
@@ -313,7 +311,6 @@ var rps = {
 		this.pHAImg.src = "assets/images/p2HandAr.png";
 		this.pHandA = "r";
 		this.pHAImg.style.display = "inline";
-		this.buttonDisabled(this.pHandABut, 3, true);
 
 		if (this.pHandA != "" && this.pHandB != ""){
 			this.roundStart();
@@ -324,7 +321,6 @@ var rps = {
 	buttonAP: function(){
 		this.pHAImg.src = "assets/images/p2HandAp.png";
 		this.pHAImg.style.display = "block";
-		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "p";
 
 		if (this.pHandA != "" && this.pHandB != ""){
@@ -335,7 +331,6 @@ var rps = {
 	buttonAS: function(){
 		this.pHAImg.src = "assets/images/p2HandAs.png";
 		this.pHAImg.style.display = "block";
-		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "s";
 
 		if (this.pHandA != "" && this.pHandB != ""){
@@ -346,7 +341,6 @@ var rps = {
 	buttonBR: function(){
 		this.pHBImg.src = "assets/images/p2HandBr.png";
 		this.pHBImg.style.display = "inline";
-		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "r";
 
 		if (this.pHandA != "" && this.pHandB != ""){
@@ -359,7 +353,6 @@ var rps = {
 	buttonBP: function(){
 		this.pHBImg.src = "assets/images/p2HandBp.png";
 		this.pHBImg.style.display = "block";
-		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "p";
 
 		if (this.pHandA != "" && this.pHandB != ""){
@@ -370,7 +363,6 @@ var rps = {
 	buttonBS: function(){
 		this.pHBImg.src = "assets/images/p2HandBs.png";
 		this.pHBImg.style.display = "block";
-		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "s";
 
 		if (this.pHandA != "" && this.pHandB != ""){
@@ -483,13 +475,6 @@ var rps = {
 		}
 
 		this.betCheck();
-	},
-
-	//disables/enables buttons
-	buttonDisabled: function (arr, num, truth){
-		for (var i = 0; i < num; i++){
-			arr[i].disabled = truth;
-		}
 	},
 
 	//puts a small buffer between win/loss/stand and pot resuming to 0
