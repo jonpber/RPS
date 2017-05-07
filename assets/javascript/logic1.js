@@ -62,10 +62,15 @@ var rps = {
 		this.pot /= 2;
 		this.getPot();
 		this.potTo0(this.potText);
+
+		this.cHAImg.style.display = "none";
+		this.cHBImg.style.display = "none";
+		this.pHAImg.style.display = "none";
+		this.pHBImg.style.display = "none";
 	},
 
 	split: function(){
-		if (this.chips - (this.betNum * 2) >= 0){
+		if (this.chips - (this.betNum) >= 0){
 			this.chips -= this.betNum;
 			this.betNum *= 2;
 			this.bet();
@@ -224,7 +229,6 @@ var rps = {
 	},
 
 	roundEnd: function (x){
-		console.log("Is this a splitBattle: " + this.splitBattle);
 		if (!this.splitBattle){
 			this.pImg.style.display = "inline";
 			this.compImg.style.display = "inline";
@@ -278,6 +282,9 @@ var rps = {
 		//Bet Number either resets to 0 or stays consistent
 		this.betText.textContent = this.betNum;
 		this.chipUpdate();
+		this.pHandA = "";
+		this.pHandB = "";
+
 	},
 
 
@@ -306,6 +313,10 @@ var rps = {
 		this.pHAImg.style.display = "inline";
 		this.buttonDisabled(this.pHandABut, 3, true);
 
+		if (this.pHandA != "" && this.pHandB != ""){
+			this.roundStart();
+		}
+
 	},
 
 	buttonAP: function(){
@@ -313,6 +324,10 @@ var rps = {
 		this.pHAImg.style.display = "block";
 		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "p";
+
+		if (this.pHandA != "" && this.pHandB != ""){
+			this.roundStart();
+		}
 	},
 
 	buttonAS: function(){
@@ -320,6 +335,10 @@ var rps = {
 		this.pHAImg.style.display = "block";
 		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "s";
+
+		if (this.pHandA != "" && this.pHandB != ""){
+			this.roundStart();
+		}
 	},
 
 	buttonBR: function(){
@@ -327,7 +346,11 @@ var rps = {
 		this.pHBImg.style.display = "inline";
 		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "r";
-		this.roundStart();
+
+		if (this.pHandA != "" && this.pHandB != ""){
+			this.roundStart();
+		}
+
 
 	},
 
@@ -336,6 +359,10 @@ var rps = {
 		this.pHBImg.style.display = "block";
 		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "p";
+
+		if (this.pHandA != "" && this.pHandB != ""){
+			this.roundStart();
+		}
 	},
 
 	buttonBS: function(){
@@ -343,6 +370,10 @@ var rps = {
 		this.pHBImg.style.display = "block";
 		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "s";
+
+		if (this.pHandA != "" && this.pHandB != ""){
+			this.roundStart();
+		}
 	},
 
 	//should remove your chips as you bet
