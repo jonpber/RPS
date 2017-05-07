@@ -40,7 +40,7 @@ h1 {
 	top: 0;
 }
 
-#splitRow, #twoHands, #pHandImg, #cHandImg, #p2HandA, #p2HandB, #c2HandA, #c2HandB {
+#splitRow, #twoHands, #pHandImg, #cHandImg, #p2HandA, #p2HandB, #c2HandA, #c2HandB, #onlyHand{
 	display: none;
 }
 
