@@ -4,11 +4,12 @@ body {
 
 .spacing {
 	text-align: center;
+	padding: 10px;
 }
 
 .center {
 	margin-top: 50px;
-	background-color: rgba(72, 58, 41, 0.66);
+	background-color: rgba(255, 169, 95, 0.39);
 	border: 2px solid rgba(82, 68, 43, 0.53);
 }
 
