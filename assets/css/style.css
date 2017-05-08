@@ -19,6 +19,7 @@ h1, p {
 
 h1 {
 	margin: 10px;
+	font-size: 50px;
 }
 
 .refTalk {
@@ -51,10 +52,6 @@ button {
 	font-size: 10px;
 }
 
-#betRow {
-	margin: 10px 0;
-}
-
 .hover:hover{
 	opacity: 0.5;
 }
@@ -66,5 +63,11 @@ button {
 
 #stateText {
 	color: black;
+}
+
+#betRow, #onlyHand, #onlyHandOff, #twoHands, #splitRow {
+	background-image: url("../images/row.png");
+	background-size: 100% 100%;
+	padding: 10px 0;
 }
 
