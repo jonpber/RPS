@@ -431,6 +431,22 @@ var rps = {
 	},
 
 	//these buttons add or subtract your bet
+	betMinus100: function() {
+		if (this.betNum - 100 >= 0){
+			this.betNum -= 100;
+			this.lastBet = -100;
+			this.takeOutChips();
+			this.betText.textContent = this.betNum;
+		}
+
+		else {
+			this.betNum = 0;
+			this.betText.textContent = this.betNum;
+		}
+
+		this.betCheck();
+	},
+
 	betMinus10: function() {
 		if (this.betNum - 10 >= 0){
 			this.betNum -= 10;
@@ -473,6 +489,17 @@ var rps = {
 		if (this.chips - 10 >= 0){
 			this.betNum += 10;
 			this.lastBet = 10;
+			this.takeOutChips();			
+			this.betText.textContent = this.betNum;
+		}
+
+		this.betCheck();
+	},
+
+	betPlus100: function() {
+		if (this.chips - 100 >= 0){
+			this.betNum += 100;
+			this.lastBet = 100;
 			this.takeOutChips();			
 			this.betText.textContent = this.betNum;
 		}
