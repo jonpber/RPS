@@ -251,7 +251,6 @@ var rps = {
 			this.betNum = 0;
 			this.potTo0(this.potText);
 			this.betRow.style.display = "block";
-			this.twoHandRow.style.display = "none";
 			this.onlyHandRow.style.display = "none";
 			this.onlyHandOff.style.display = "block";
 			this.tie = false;
@@ -267,7 +266,6 @@ var rps = {
 			this.getPot();
 			this.potTo0(this.potText);
 			this.betRow.style.display = "block";
-			this.twoHandRow.style.display = "none";
 			this.onlyHandOff.style.display = "block";
 			this.tie = false;
 		}
@@ -284,6 +282,7 @@ var rps = {
 		this.chipUpdate();
 		this.pHandA = "";
 		this.pHandB = "";
+		this.twoHandRow.style.display = "none";
 
 	},
 
@@ -312,7 +311,7 @@ var rps = {
 		this.pHandA = "r";
 		this.pHAImg.style.display = "inline";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 
@@ -323,7 +322,7 @@ var rps = {
 		this.pHAImg.style.display = "block";
 		this.pHandA = "p";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
@@ -333,7 +332,7 @@ var rps = {
 		this.pHAImg.style.display = "block";
 		this.pHandA = "s";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
@@ -343,7 +342,7 @@ var rps = {
 		this.pHBImg.style.display = "inline";
 		this.pHandB = "r";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 
@@ -355,7 +354,7 @@ var rps = {
 		this.pHBImg.style.display = "block";
 		this.pHandB = "p";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
@@ -365,14 +364,14 @@ var rps = {
 		this.pHBImg.style.display = "block";
 		this.pHandB = "s";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
 
 	//should remove your chips as you bet
 	takeOutChips: function(){
-		if(this.lastBet != 0){
+		if(this.lastBet !== 0){
 			this.chips -= this.lastBet;
 			this.chipUpdate();
 		}
