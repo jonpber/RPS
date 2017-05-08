@@ -18,21 +18,27 @@
 <body>
 	<div class="container center">
 		<div class="row">
-			<div class="col-lg-12 spacing">
-				<h1>All or Nothing RPS!</h1>
+			<div class="col-xs-12 spacing">
+				<h1>All-or-Nothing RPS!</h1>
 			</div>
 		</div>
 
 		<div class="row">
-			<p class="col-lg-4 spacing">Chips: <span id="chips">50</span></p>
-			<p class="col-lg-4 spacing">Pot: <span id="pot">0</span></p>
-			<p class="col-lg-4 spacing">Bet: <span id="bet">0</span></p>
+			<div class="col-xs-12 spacing">
+				<h3 id="stateText">Please make your bet.</h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<p class="col-xs-4 spacing">Chips: <span id="chips">50</span></p>
+			<p class="col-xs-4 spacing">Pot: <span id="pot">0</span></p>
+			<p class="col-xs-4 spacing">Bet: <span id="bet">0</span></p>
 		</div>
 
 
 		<div class="row">
-			<div class="col-lg-8 spacing">
-				<img src="assets/images/gameBack.png">
+			<div class="col-xs-12 spacing">
+				<img id="back" src="assets/images/gameBack.png">
 				<img id="pHandImg" class="hands" src="assets/images/pHandr.png">
 				<img id="cHandImg" class="hands" src="assets/images/cHands.png">
 
@@ -41,74 +47,78 @@
 				<img id="c2HandA" class="hands" src="assets/images/c2HandAp.png">
 				<img id="c2HandB" class="hands" src="assets/images/c2HandBr.png">
 			</div>
-
-			<div class="col-lg-4 spacing">
-				<div class="row">
-					<div class="col-lg-12">
-						<img src="assets/images/wordBub.png">
-						<p class="bubbleP" id="stateText">Welcome to extreme R-P-S!</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-lg-12">
-						<img src="assets/images/ref.png">
-					</div>
-				</div>
-	
-			</div>
 		</div>
 
 		<div id="betRow" class="row">
-			<div class="col-lg-3 spacing">
-				<button onclick="rps.betMinus10()">-10</button>
+			<div class="col-xs-2 spacing">
+				<img class="hover betBut" onclick="rps.betMinus100()"" src="assets/images/min100.png">
 			</div>	
-			<div class="col-lg-3 spacing">
-				<button onclick="rps.betMinus1()">-1</button>
+			<div class="col-xs-2 spacing">
+				<img class="hover betBut" onclick="rps.betMinus10()"" src="assets/images/min10.png">
 			</div>	
-			<div class="col-lg-3 spacing">
-				<button onclick="rps.betPlus1()">+1</button>
+			<div class="col-xs-2 spacing">
+				<img  class="hover betBut" onclick="rps.betMinus1()"" src="assets/images/min1.png">
 			</div>	
-			<div class="col-lg-3 spacing">
-				<button onclick="rps.betPlus10()">+10</button>
+			<div class="col-xs-2 spacing">
+				<img  class="hover betBut" onclick="rps.betPlus1()"" src="assets/images/plus1.png">
+			</div>	
+			<div class="col-xs-2 spacing">
+				<img  class="hover betBut" onclick="rps.betPlus10()"" src="assets/images/plus10.png">
+			</div>	
+			<div class="col-xs-2 spacing">
+				<img  class="hover betBut" onclick="rps.betPlus100()"" src="assets/images/plus100.png">
 			</div>	
 		</div>
 
 		<div id="onlyHand" class="row">
-			<div class="col-lg-4 spacing">
-				<button class="oneHandButton" onclick="rps.buttonR()" disabled>Rock</button>
+			<div class="col-xs-4 spacing">
+				<img class="button hover handbut" onclick="rps.buttonR()" src="assets/images/rbutton.png">
 			</div>	
-			<div class="col-lg-4 spacing">
-				<button class="oneHandButton" onclick="rps.buttonP()" disabled>Paper</button>
+			<div class="col-xs-4 spacing">
+				<img class="button hover handbut" onclick="rps.buttonP()" src="assets/images/pbutton.png">
 			</div>	
-			<div class="col-lg-4 spacing">
-				<button class="oneHandButton" onclick="rps.buttonS()" disabled>Scissors</button>
+			<div class="col-xs-4 spacing">
+				<img class="button hover handbut" onclick="rps.buttonS()" src="assets/images/sbutton.png">
+			</div>	
+		</div>
+
+		<div id="onlyHandOff" class="row">
+			<div class="col-xs-4 spacing">
+				<img class="button handbut" src="assets/images/rbuttond.png">
+
+			</div>	
+			<div class="col-xs-4 spacing">
+				<img class="button handbut" src="assets/images/pbuttond.png">
+
+			</div>	
+			<div class="col-xs-4 spacing">
+				<img class="button handbut" src="assets/images/sbuttond.png">
+
 			</div>	
 		</div>
 
 		<div id="twoHands" class="row">
-			<div class="col-lg-12">
-				<div class="col-lg-6 spacing">
-					<div class="col-lg-4 spacing">
-						<button class="twoHandAButton" onclick="rps.buttonAR()">Rock</button>
+			<div class="col-xs-12">
+				<div class="col-xs-6 spacing">
+					<div class="col-xs-4 spacing">
+						<img class="button hover handbut" onclick="rps.buttonAR()" src="assets/images/rbutton.png">
 					</div>	
-					<div class="col-lg-4 spacing">
-						<button class="twoHandAButton" onclick="rps.buttonAP()">Paper</button>
+					<div class="col-xs-4 spacing">
+						<img class="button hover handbut" onclick="rps.buttonAP()" src="assets/images/pbutton.png">
 					</div>	
-					<div class="col-lg-4 spacing">
-						<button class="twoHandAButton" onclick="rps.buttonAS()">Scissors</button>
+					<div class="col-xs-4 spacing">
+						<img class="button hover handbut" onclick="rps.buttonAS()" src="assets/images/sbutton.png">
 					</div>	
-
 				</div>	
-				<div class="col-lg-6 spacing">
-					<div class="col-lg-4 spacing">
-						<button class="twoHandBButton" onclick="rps.buttonBR()">Rock</button>
+				<div class="col-xs-6 spacing">
+					<div class="col-xs-4 spacing">
+						<img class="button hover handbut" onclick="rps.buttonBR()" src="assets/images/rbuttona.png">
 					</div>	
-					<div class="col-lg-4 spacing">
-						<button class="twoHandBButton" onclick="rps.buttonBP()">Paper</button>
+					<div class="col-xs-4 spacing">
+						<img class="button hover handbut" onclick="rps.buttonBP()" src="assets/images/pbuttona.png">
 					</div>	
-					<div class="col-lg-4 spacing">
-						<button class="twoHandBButton" onclick="rps.buttonBS()">Scissors</button>
+					<div class="col-xs-4 spacing">
+						<img class="button hover handbut" onclick="rps.buttonBS()" src="assets/images/sbuttona.png">
 					</div>	
 				</div>
 			</div>
@@ -116,11 +126,11 @@
 		</div>
 
 		<div id="splitRow" class="row">
-			<div class="col-lg-6 spacing">
-				<button onclick="rps.stand()">Stand</button>
+			<div class="col-xs-6 spacing">
+				<img class="hover handbut" onclick="rps.stand()" src="assets/images/stand.png">
 			</div>	
-			<div class="col-lg-6 spacing">
-				<button onclick="rps.split()">Split</button>
+			<div class="col-xs-6 spacing">
+				<img class="hover handbut" onclick="rps.split()" src="assets/images/split.png">
 			</div>	
 		</div>
 

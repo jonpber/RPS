@@ -17,6 +17,7 @@ var rps = {
 
 	splitRow: document.getElementById("splitRow"),
 	onlyHandRow: document.getElementById("onlyHand"),
+	onlyHandOff: document.getElementById("onlyHandOff"),
 	twoHandRow: document.getElementById("twoHands"),
 	pHandABut: document.getElementsByClassName("twoHandAButton"),
 	pHandBBut: document.getElementsByClassName("twoHandBButton"),
@@ -50,7 +51,6 @@ var rps = {
 	stand: function(){
 		//turns off the tie bar and returns to default
 		this.splitRow.style.display = "none";
-		this.onlyHandRow.style.display = "block";
 		this.twoHandRow.style.display = "none";
 		this.betRow.style.display = "block";
 
@@ -62,6 +62,7 @@ var rps = {
 		this.pot /= 2;
 		this.getPot();
 		this.potTo0(this.potText);
+		this.onlyHandOff.style.display = "block";
 
 		this.cHAImg.style.display = "none";
 		this.cHBImg.style.display = "none";
@@ -86,8 +87,6 @@ var rps = {
 			this.pHAImg.style.display = "none";
 			this.pHBImg.style.display = "none";
 			this.splitBattle = true;
-			this.buttonDisabled(this.pHandABut, 3, false);
-			this.buttonDisabled(this.pHandBBut, 3, false);
 		}
 
 		else {
@@ -214,6 +213,7 @@ var rps = {
 			this.cHBImg.style.display = "none";
 			this.pHAImg.style.display = "none";
 			this.pHBImg.style.display = "none";
+			this.onlyHandRow.style.display = "none";
 			this.bet();
 			this.compPick();
 			this.gamelogic();
@@ -251,8 +251,9 @@ var rps = {
 			this.betNum = 0;
 			this.potTo0(this.potText);
 			this.betRow.style.display = "block";
-			this.twoHandRow.style.display = "none";
-			this.onlyHandRow.style.display = "block";
+			this.onlyHandRow.style.display = "none";
+			this.onlyHandOff.style.display = "block";
+			this.tie = false;
 		}
 
 		//comp wins round
@@ -265,17 +266,14 @@ var rps = {
 			this.getPot();
 			this.potTo0(this.potText);
 			this.betRow.style.display = "block";
-			this.twoHandRow.style.display = "none";
-			this.onlyHandRow.style.display = "block";
+			this.onlyHandOff.style.display = "block";
+			this.tie = false;
 		}
 
 		//round ends in tie
 		else {
 			this.stateText.textContent = "A tie!!! Care to split and double your bet?"
-			
-			//turns on the split bar option
 			this.splitRow.style.display = "block";
-			this.onlyHandRow.style.display = "none";
 			this.betRow.style.display = "none";
 		}
 
@@ -284,6 +282,7 @@ var rps = {
 		this.chipUpdate();
 		this.pHandA = "";
 		this.pHandB = "";
+		this.twoHandRow.style.display = "none";
 
 	},
 
@@ -311,9 +310,8 @@ var rps = {
 		this.pHAImg.src = "assets/images/p2HandAr.png";
 		this.pHandA = "r";
 		this.pHAImg.style.display = "inline";
-		this.buttonDisabled(this.pHandABut, 3, true);
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 
@@ -322,10 +320,9 @@ var rps = {
 	buttonAP: function(){
 		this.pHAImg.src = "assets/images/p2HandAp.png";
 		this.pHAImg.style.display = "block";
-		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "p";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
@@ -333,10 +330,9 @@ var rps = {
 	buttonAS: function(){
 		this.pHAImg.src = "assets/images/p2HandAs.png";
 		this.pHAImg.style.display = "block";
-		this.buttonDisabled(this.pHandABut, 3, true);
 		this.pHandA = "s";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
@@ -344,10 +340,9 @@ var rps = {
 	buttonBR: function(){
 		this.pHBImg.src = "assets/images/p2HandBr.png";
 		this.pHBImg.style.display = "inline";
-		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "r";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 
@@ -357,10 +352,9 @@ var rps = {
 	buttonBP: function(){
 		this.pHBImg.src = "assets/images/p2HandBp.png";
 		this.pHBImg.style.display = "block";
-		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "p";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
@@ -368,17 +362,16 @@ var rps = {
 	buttonBS: function(){
 		this.pHBImg.src = "assets/images/p2HandBs.png";
 		this.pHBImg.style.display = "block";
-		this.buttonDisabled(this.pHandBBut, 3, true);
 		this.pHandB = "s";
 
-		if (this.pHandA != "" && this.pHandB != ""){
+		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
 	},
 
 	//should remove your chips as you bet
 	takeOutChips: function(){
-		if(this.lastBet != 0){
+		if(this.lastBet !== 0){
 			this.chips -= this.lastBet;
 			this.chipUpdate();
 		}
@@ -411,22 +404,45 @@ var rps = {
 	chipUpdate: function(){
 		this.betText.textContent = this.betNum;
 		this.chipText.textContent = this.chips;
-		this.betCheck();
 	},
 
 	//This function ensures there is a bet before you are allowed to play.
 	betCheck: function(){
 		//if bet is more than 0
-		if (this.betNum > 0){
-			this.buttonDisabled(this.oneHandChoices, 3, false);
-			
+		if (this.betNum > 0 && !this.tie){
+			this.onlyHandOff.style.display = "none";
+			this.onlyHandRow.style.display = "block";
 		}
+
 		else {
-			this.buttonDisabled(this.oneHandChoices, 3, true);
+			this.onlyHandRow.style.display = "none";
+			this.onlyHandOff.style.display = "block";
+		}
+
+		if (this.tie){
+
+			this.onlyHandRow.style.display = "none";
+			this.onlyHandOff.style.display = "none";
 		}
 	},
 
 	//these buttons add or subtract your bet
+	betMinus100: function() {
+		if (this.betNum - 100 >= 0){
+			this.betNum -= 100;
+			this.lastBet = -100;
+			this.takeOutChips();
+			this.betText.textContent = this.betNum;
+		}
+
+		else {
+			this.betNum = 0;
+			this.betText.textContent = this.betNum;
+		}
+
+		this.betCheck();
+	},
+
 	betMinus10: function() {
 		if (this.betNum - 10 >= 0){
 			this.betNum -= 10;
@@ -476,11 +492,15 @@ var rps = {
 		this.betCheck();
 	},
 
-	//disables/enables buttons
-	buttonDisabled: function (arr, num, truth){
-		for (var i = 0; i < num; i++){
-			arr[i].disabled = truth;
+	betPlus100: function() {
+		if (this.chips - 100 >= 0){
+			this.betNum += 100;
+			this.lastBet = 100;
+			this.takeOutChips();			
+			this.betText.textContent = this.betNum;
 		}
+
+		this.betCheck();
 	},
 
 	//puts a small buffer between win/loss/stand and pot resuming to 0
