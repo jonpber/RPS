@@ -66,8 +66,7 @@ button {
 }
 
 #betRow, #onlyHand, #onlyHandOff, #twoHands, #splitRow {
-	background-image: url("../images/row.png");
-	background-size: 100% 100%;
-	padding: 10px 0;
+	border: 1px solid #5c452c;
+	background: #372c21;
 }
 

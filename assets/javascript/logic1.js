@@ -36,6 +36,7 @@ var rps = {
 	pHBImg: document.getElementById("p2HandB"),
 	cHAImg: document.getElementById("c2HandA"),
 	cHBImg: document.getElementById("c2HandB"),
+	ref: document.getElementById("commentator"),
 	pWon: false,
 	tie: false,
 	splitBattle: false,
@@ -53,6 +54,7 @@ var rps = {
 		this.splitRow.style.display = "none";
 		this.twoHandRow.style.display = "none";
 		this.betRow.style.display = "block";
+		this.ref.src = "assets/images/refbored.png";
 
 		this.stateText.textContent = "I guess you're not a risk-taker."
 
@@ -91,6 +93,7 @@ var rps = {
 
 		else {
 			this.stateText.textContent = "Looks like you don't have enough chips."
+			this.ref.src = "assets/images/refbored.png";
 		}
 	},
 
@@ -208,6 +211,7 @@ var rps = {
 	},
 
 	roundStart: function(){
+		this.ref.src = "assets/images/ref.png";
 		if(!this.splitBattle){
 			this.cHAImg.style.display = "none";
 			this.cHBImg.style.display = "none";
