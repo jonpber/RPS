@@ -34,6 +34,11 @@ h2 {
 	height: 90%;
 	left: 20%;
 	top: 21px;
+	opacity: 0.0;
+}
+
+#animate {
+	opacity: 100%;
 }
 
 #splitRow, #twoHands, #pHandImg, #cHandImg, #p2HandA, #p2HandB, #c2HandA, #c2HandB, #onlyHand{
@@ -90,7 +95,7 @@ h2 {
 
 }
 
-@media screen and (max-width: 680px){
+@media screen and (max-width: 720px){
 	.hands {
 		left: 14%;
 		top: 15%;
