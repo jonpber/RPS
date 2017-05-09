@@ -86,6 +86,8 @@ var rps = {
 			this.cHBImg.style.display = "none";
 			this.pHAImg.style.display = "none";
 			this.pHBImg.style.display = "none";
+			this.pHAImg.style.opacity = 1;
+			this.pHBImg.style.opacity = 1;
 			this.splitBattle = true;
 		}
 
@@ -231,12 +233,17 @@ var rps = {
 	roundEnd: function (x){
 		if (!this.splitBattle){
 			this.pImg.style.display = "inline";
+			this.fadeIn(this.pImg);
 			this.compImg.style.display = "inline";
+			this.fadeIn(this.compImg);
+
 		}
 
 		else {
 			this.cHAImg.style.display = "inline";
 			this.cHBImg.style.display = "inline";
+			this.fadeIn(this.cHAImg);
+			this.fadeIn(this.cHBImg);
 		}
 
 		this.splitBattle = false;
@@ -283,6 +290,10 @@ var rps = {
 		this.pHandA = "";
 		this.pHandB = "";
 		this.twoHandRow.style.display = "none";
+		this.pImg.style.opacity = 0;
+		this.compImg.style.opacity = 0;
+		this.cHAImg.style.opacity = 0;
+		this.cHBImg.style.opacity = 0;
 
 	},
 
@@ -311,6 +322,7 @@ var rps = {
 		this.pHandA = "r";
 		this.pHAImg.style.display = "inline";
 
+
 		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
@@ -322,6 +334,7 @@ var rps = {
 		this.pHAImg.style.display = "block";
 		this.pHandA = "p";
 
+
 		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
@@ -332,6 +345,7 @@ var rps = {
 		this.pHAImg.style.display = "block";
 		this.pHandA = "s";
 
+
 		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
@@ -341,6 +355,7 @@ var rps = {
 		this.pHBImg.src = "assets/images/p2HandBr.png";
 		this.pHBImg.style.display = "inline";
 		this.pHandB = "r";
+
 
 		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
@@ -354,6 +369,7 @@ var rps = {
 		this.pHBImg.style.display = "block";
 		this.pHandB = "p";
 
+
 		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
 		}
@@ -363,6 +379,7 @@ var rps = {
 		this.pHBImg.src = "assets/images/p2HandBs.png";
 		this.pHBImg.style.display = "block";
 		this.pHandB = "s";
+
 
 		if (this.pHandA !== "" && this.pHandB !== ""){
 			this.roundStart();
@@ -517,6 +534,22 @@ var rps = {
 		this.lastBet = 0;
 		this.chipUpdate();
 	},
+
+	fadeIn: function(x){
+		var counter = 0
+		var id = setInterval(frame, 10);
+		function frame() {
+			if (counter >= 20) {
+				clearInterval(id);
+			} 
+			else {
+			  counter++ ;
+			  x.style.opacity = counter / 20;
+			 
+			}
+		}
+
+	}
 
 }
 
