@@ -4,14 +4,14 @@ body {
 
 body:after{
 	display:none;
-	content: url("../images/pHandp.png.png");
-	content: url("../images/pHands.png.png");	
-	content: url("../images/cHandp.png.png");	
-	content: url("../images/cHandr.png.png");	
-	content: url("../images/c2HandAs.png.png");	
-	content: url("../images/c2HandAr.png.png");
-	content: url("../images/c2HandBs.png.png");	
-	content: url("../images/c2HandBp.png.png");							
+	content: url("../images/pHandp.png");
+	content: url("../images/pHands.png");	
+	content: url("../images/cHandp.png");	
+	content: url("../images/cHandr.png");	
+	content: url("../images/c2HandAs.png");	
+	content: url("../images/c2HandAr.png");
+	content: url("../images/c2HandBs.png");	
+	content: url("../images/c2HandBp.png");							
 }
 
 
