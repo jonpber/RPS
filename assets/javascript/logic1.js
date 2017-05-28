@@ -185,8 +185,6 @@ var rps = {
 			var winner1 = this.handsCheck(this.pHandA, this.compHandA);
 			var winner2 = this.handsCheck(this.pHandB, this.compHandB);
 
-			console.log("winners:" + winner1 + " " + winner2);
-
 			if (winner1 === "p" && (winner2 === "p" || winner2 === "t")){
 				this.roundEnd("p");
 			}
